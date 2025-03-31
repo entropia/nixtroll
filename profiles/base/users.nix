@@ -12,4 +12,14 @@
     extraGroups = [ "wheel" "systemd-journal" ];
     shell = pkgs.fish;
   };
+
+  users.users.avara = {
+    uid = 1001;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOyc5MWLx4kkAtkCCYvTOr6iIgGvOXRPmTIneg/x10uS"
+    ];
+    isNormalUser = true;
+    extraGroups = [ "wheel" "systemd-journal" ];
+    shell = pkgs.zsh;
+  };
 }

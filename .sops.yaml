@@ -1,9 +1,11 @@
 keys:
   - &admin_hexchen age1wvtkhug4q7fcs7wz03kpn77ruqkkwp2xqq30npv4287wtf3w8ukq370vre
+  - &admin_avara age18tpw7wa8zv7fe2zekpan2ggrynrmhdessy63alprfyujgk4wyd4sq0uvtd
   - &server_trollsystem age1zp0r5ed24de8et9kmwey4y3e83x0np3rzrsls3egm2tm946mvp7qv7jfts
 creation_rules:
   - path_regex: hosts/trollsystem/secrets.sops.yaml
     key_groups:
       - age:
         - *admin_hexchen
+        - *admin_avara
         - *server_trollsystem
