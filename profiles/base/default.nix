@@ -15,6 +15,7 @@
   nix.gc.options = lib.mkDefault "--delete-older-than 7d";
   environment.variables.EDITOR = "vim";
   programs.fish.enable = true;
+  programs.zsh.enable = true;
 
   environment.systemPackages = with pkgs; [
     kitty.terminfo
