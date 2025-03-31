@@ -85,5 +85,8 @@
   time.timeZone = "UTC";
   sops.defaultSopsFile = ../../hosts/${config.networking.hostName}/secrets.sops.yaml;
 
+  security.acme.acceptTerms = true;
+  security.acme.defaults.email = "oops@lists.entropia.de";
+
   environment.etc."ssl-unbundled".source = "${pkgs.cacert.unbundled}/etc/ssl";
 }

@@ -1,0 +1,105 @@
+From e68b9e98cbc3c7f2b1ae073f1c67460fd87d8466 Mon Sep 17 00:00:00 2001
+From: hexchen <hexchen@lilwit.ch>
+Date: Mon, 31 Mar 2025 18:14:54 +0200
+Subject: [PATCH] Trollsystem Patches
+
+Co-authored-by: Xu <git@xumail.de>
+Co-authored-by: Igor Scheller <igor.scheller@igorshp.de>
+---
+ config/app.php                                |  1 +
+ .../TranslationServiceProvider.php            | 16 +++++++
+ src/EventSpecific/Translator.php              | 47 +++++++++++++++++++
+ 3 files changed, 64 insertions(+)
+ create mode 100644 src/EventSpecific/TranslationServiceProvider.php
+ create mode 100644 src/EventSpecific/Translator.php
+
+diff --git a/config/app.php b/config/app.php
+index 50059765..231c7db8 100644
+--- a/config/app.php
++++ b/config/app.php
+@@ -20,6 +20,7 @@ return [
+         \Engelsystem\Database\DatabaseServiceProvider::class,
+         \Engelsystem\Http\RequestServiceProvider::class,
+         \Engelsystem\Http\SessionServiceProvider::class,
++        \Engelsystem\EventSpecific\TranslationServiceProvider::class,
+         \Engelsystem\Helpers\Translation\TranslationServiceProvider::class,
+         \Engelsystem\Http\ResponseServiceProvider::class,
+         \Engelsystem\Http\Psr7ServiceProvider::class,
+diff --git a/src/EventSpecific/TranslationServiceProvider.php b/src/EventSpecific/TranslationServiceProvider.php
+new file mode 100644
+index 00000000..71424d27
+--- /dev/null
++++ b/src/EventSpecific/TranslationServiceProvider.php
+@@ -0,0 +1,16 @@
++<?php
++
++declare(strict_types=1);
++
++namespace Engelsystem\EventSpecific;
++
++use Engelsystem\Container\ServiceProvider;
++use Engelsystem\Helpers\Translation\Translator as EngelsystemTranslator;
++
++class TranslationServiceProvider extends ServiceProvider
++{
++    public function register(): void
++    {
++        $this->app->alias(Translator::class, EngelsystemTranslator::class);
++    }
++}
+diff --git a/src/EventSpecific/Translator.php b/src/EventSpecific/Translator.php
+new file mode 100644
+index 00000000..20b779a0
+--- /dev/null
++++ b/src/EventSpecific/Translator.php
+@@ -0,0 +1,47 @@
++<?php
++
++declare(strict_types=1);
++
++namespace Engelsystem\EventSpecific;
++
++use Engelsystem\Helpers\Translation\Translator as EngelsystemTranslator;
++
++class Translator extends EngelsystemTranslator
++{
++    /** @var array */
++    protected array $replacements = [
++        // EN
++        'Angeltypes' => 'Trolltypes',
++        'angeltypes' => 'trolltypes',
++        'Angeltype'  => 'Trolltype',
++        'Angels'     => 'Trolls',
++        'angels'     => 'trolls',
++        'Angel'      => 'Troll',
++        'Heaven'     => 'Troll Cave',
++        'helpers'    => 'trolls',
++        'helper'     => 'troll',
++        'the instruction about §43 IfSG (aka Frikadellendiplom) from my Health Department and a second instruction from us or my employer/chef/association within 3 months. Additionally my second instruction is not older than 2 years.' => 'the hygene instructions and signed the statement.', 
++
++        // DE
++        'Engeltypen' => 'Trolltypen',
++        'Engeltyp'   => 'Trolltyp',
++        'Engel'      => 'Trolle',
++        'den Himmel' => 'die Trollhöhle',
++        'Himmel'     => 'Trollhöhle',
++        'Helfer'     => 'Trolle',
++        'eine Belehrung nach §43 IfSG (Frikadellendiplom) bei meinem Gesundheitsamt erhalten und innerhalb von 3 Monaten die Zweitbelehrung durch uns oder meinen Arbeitgeber/Koch/Verein bekommen. Zusätzlich ist die Zweitbelehrung nicht älter als zwei Jahre.' => 'die Hygienebelehrung gelesen und die Erklärung unterschrieben.',
++    ];
++
++    /**
++     * @param array  $replace
++     *
++     */
++    protected function replaceText(string $text, array $replace = []): mixed
++    {
++        $text = parent::replaceText($text, $replace);
++
++        $text = str_replace(array_keys($this->replacements), array_values($this->replacements), $text);
++
++        return $text;
++    }
++}
+-- 
+2.39.5 (Apple Git-154)
+
