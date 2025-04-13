@@ -61,7 +61,7 @@
         hidden = false;
         mark_arrived = false;
         enable_password = false;
-        allow_registration = false;
+        allow_registration = true;
       };
 
       version = "${config.services.engelsystem.package.version}";
