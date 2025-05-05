@@ -67,7 +67,7 @@
       version = "${config.services.engelsystem.package.version}";
 
       enable_email_goodie = true;
-      registration_enabled = false;
+      registration_enabled = true;
       signup_requires_arrival = true;
       autoarrive = false;
       supporters_can_promote = true;
