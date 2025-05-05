@@ -109,7 +109,13 @@
         url = "https://github.com/engelsystem/engelsystem/releases/download/v3.6.0/engelsystem-v3.6.0.zip";
         hash = "sha256-AZVW04bcSlESSRmtfvP2oz15xvZLlGEz/X9rX7PuRGg=";
       };
-      patches = [ ./patches/0001-Trollsystem-Patches.patch ];
+      patches = [
+        ./patches/0001-Trollsystem-Patches.patch
+        (pkgs.fetchurl {
+          url = "https://github.com/engelsystem/engelsystem/pull/1536.patch";
+          hash = "sha256-yP27j8S+bf0uZkTMLQ9bZ6g73NeHw8yPLNp1/Ny3Shg=";
+        })
+      ];
     });
   };
 
