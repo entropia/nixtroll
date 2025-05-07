@@ -52,7 +52,7 @@ new file mode 100644
 index 00000000..20b779a0
 --- /dev/null
 +++ b/src/EventSpecific/Translator.php
-@@ -0,0 +1,47 @@
+@@ -0,0 +1,49 @@
 +<?php
 +
 +declare(strict_types=1);
@@ -72,6 +72,7 @@ index 00000000..20b779a0
 +        'Angels'     => 'Trolls',
 +        'angels'     => 'trolls',
 +        'Angel'      => 'Troll',
++        'angel'      => 'troll',
 +        'Heaven'     => 'Troll Cave',
 +        'heaven'     => 'troll cave',
 +        'helpers'    => 'trolls',
