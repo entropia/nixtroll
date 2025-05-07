@@ -123,9 +123,30 @@
     CONTACT_EMAIL = "mailto:troll@gulas.ch";
   };
 
+  services.nginx.appendHttpConfig = ''
+    geo $auth_bypass {
+      127.0.0.1/32 "off";
+      ::1/128 "off";
+      78.46.200.166/32 "off";
+      2a01:4f8:c2c:188::/64 "off";
+      default "secured";
+    }
+  '';
   networking.firewall.allowedTCPPorts = [ 80 443 ];
   services.nginx.virtualHosts."troll.gulas.ch" = {
     enableACME = true;
     forceSSL = true;
+    locations."/metrics" = {
+      root = "${config.services.engelsystem.package}/share/engelsystem/public";
+      extraConfig = ''
+        index index.php;
+        try_files $uri $uri/ /index.php?$args;
+        autoindex off;
+        auth_basic $auth_bypass;
+        auth_basic_user_file ${pkgs.writeText "metrics-htpasswd" ''
+          metrics:$2b$05$Dcy8l.crQzwNdUvcRM5TQehMMUdwphwTwMawr6PKFBCBaIe38gxeK
+        ''};
+      '';
+    };
   };
 }
