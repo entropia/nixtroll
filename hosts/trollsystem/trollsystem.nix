@@ -148,5 +148,6 @@
         ''};
       '';
     };
+    locations."/trolltypes".return = "301 https://troll.gulas.ch/angeltypes$is_args$args";
   };
 }
