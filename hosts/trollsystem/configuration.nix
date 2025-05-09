@@ -21,5 +21,16 @@
 
   networking.hostId = "327361eb";
 
+  networking.interfaces.enp1s0.useDHCP = true;
+  networking.interfaces.enp1s0.ipv6.addresses = [{
+    address = "2a01:4f8:1c17:6531::1";
+    prefixLength = 64;
+  }];
+  networking.interfaces.enp1s0.ipv6.routes = [{
+    address = "::";
+    prefixLength = 0;
+    via = "fe80::1";
+  }];
+
   system.stateVersion = "24.11";
 }
