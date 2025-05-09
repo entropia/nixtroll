@@ -123,6 +123,9 @@
     CONTACT_EMAIL = "mailto:troll@gulas.ch";
   };
 
+  services.nginx.package = pkgs.nginx.override {
+    withGeoIP = true;
+  };
   services.nginx.appendHttpConfig = ''
     geo $auth_bypass {
       127.0.0.1/32 "off";
@@ -131,11 +134,25 @@
       2a01:4f8:c2c:188::/64 "off";
       default "secured";
     }
+
+    geoip_country ${pkgs.geolite-legacy}/share/GeoIP/GeoIPv6.dat;
+    map $geoip_country_code $allow_visit {
+      DE yes;
+      AT yes;
+      CH yes;
+      FR yes;
+      default no;
+    }
   '';
   networking.firewall.allowedTCPPorts = [ 80 443 ];
   services.nginx.virtualHosts."troll.gulas.ch" = {
     enableACME = true;
     forceSSL = true;
+    locations."/".extraConfig = lib.mkBefore ''
+      if ($allow_visit = no) {
+        return 403;
+      }
+    '';
     locations."/metrics" = {
       root = "${config.services.engelsystem.package}/share/engelsystem/public";
       extraConfig = ''
