@@ -85,7 +85,7 @@
       max_freeloadable_shifts = 2;
       timezone = "Europe/Berlin";
       driving_license_enabled = false;
-      ifsg_enabled = false;
+      ifsg_enabled = true;
       ifsg_light_enabled = true;
       enable_day_of_event = true;
       event_has_day0 = true;
