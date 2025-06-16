@@ -142,6 +142,8 @@
       CH yes;
       FR yes;
       NL yes;
+      DK yes;
+      GB yes;
       default no;
     }
   '';
