@@ -144,6 +144,12 @@
       NL yes;
       DK yes;
       GB yes;
+      default $geoip_bypass;
+    }
+
+    geo $geoip_bypass {
+      151.218.0.0/18 yes;
+      2a0e:c5c0::/29 yes;
       default no;
     }
   '';
