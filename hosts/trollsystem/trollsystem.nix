@@ -5,6 +5,7 @@
     mail_pass = {};
     oidc_client_id = {};
     oidc_client_secret = {};
+    printer_webhook = {};
   };
   users.users.engelsystem.extraGroups = [ config.users.groups.keys.name ];
 
@@ -82,6 +83,10 @@
       enable_self_worklog = false;
       goodie_type = "goodie";
       enable_voucher = true;
+      voucher_settings = {
+        hours_per_voucher = 4;
+        webhook._secret = config.sops.secrets.printer_webhook.path;
+      };
       max_freeloadable_shifts = 2;
       timezone = "Europe/Berlin";
       driving_license_enabled = false;
@@ -111,6 +116,7 @@
       };
       patches = [
         ./patches/0001-Trollsystem-Patches.patch
+        ./patches/0003-hack-webhook-for-voucher-printing.patch
         (pkgs.fetchurl {
           url = "https://github.com/engelsystem/engelsystem/pull/1536.patch";
           hash = "sha256-yP27j8S+bf0uZkTMLQ9bZ6g73NeHw8yPLNp1/Ny3Shg=";

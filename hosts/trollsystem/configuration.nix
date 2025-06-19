@@ -32,5 +32,7 @@
     via = "fe80::1";
   }];
 
+  services.tailscale.enable = true;
+
   system.stateVersion = "24.11";
 }
