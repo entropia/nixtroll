@@ -141,20 +141,10 @@
       default "secured";
     }
 
-    geoip_country ${pkgs.geolite-legacy}/share/GeoIP/GeoIPv6.dat;
-    map $geoip_country_code $allow_visit {
-      DE yes;
-      AT yes;
-      CH yes;
-      FR yes;
-      NL yes;
-      DK yes;
-      GB yes;
-      default $geoip_bypass;
-    }
-
-    geo $geoip_bypass {
-      151.218.0.0/18 yes;
+    geo $allow_visit {
+      87.139.60.236/32 yes;
+      45.140.180.0/22 yes;
+      2003:a:53c:b000::/48 yes;
       2a0e:c5c0::/29 yes;
       default no;
     }
@@ -165,7 +155,7 @@
     forceSSL = true;
     locations."/".extraConfig = lib.mkBefore ''
       if ($allow_visit = no) {
-        return 403;
+        return 307 https://gulas.ch;
       }
     '';
     locations."/metrics" = {
