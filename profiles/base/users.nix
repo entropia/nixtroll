@@ -13,10 +13,12 @@
     shell = pkgs.fish;
   };
 
-  users.users.avara = {
-    uid = 1001;
+  # uid 1001 use to be avara
+
+  users.users.e-cathy = {
+    uid = 1002;
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOyc5MWLx4kkAtkCCYvTOr6iIgGvOXRPmTIneg/x10uS"
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC2Tjm/kuAgVSyASyhMyZUKXcQmT2YzdlW0o2QpI6yEeXJT+QWPcrg7qP9hXrfiwTnBpxfY9LPVcFRZ4Z2ChhTvmxdF34yHOU+kp2ceZyuQ8X8NBwCLrzxJqMGDhf6/vW/uIozb56QkFgdIgSnwcZn0GWEfd4Y1+zxgpYGOS2wxHpoTV45UeIMzmdT4jgkFxs79Iw+0xMM6wkRK/S0+b02MwvWO5sEgxIXTPymTAfVWbbOL/5CBr2qinvshdWVf7mufAZkICHO8zslUPheVINnYH+lS4ZYgOYjLZ1+3Wtv+dLulbbWq1BiOcXyLiEDQQ5+eXTySTKZR284UWvt40xJo58nRXIxMQ00c1B0v1KFha4GgZQdi/k43XOkD5or1E5fYJkKwOtlKhRA3g4EXPEPM691tMHb+vSgqUA5OWJUckuYxVp60dMFfZirKxAWy6cStdhYzd8FobefccZ4oMTkv1VT6EQoUaxpUQtXApjJEVfUX413w3r5H9CkArR0S9Jk="
     ];
     isNormalUser = true;
     extraGroups = [ "wheel" "systemd-journal" ];

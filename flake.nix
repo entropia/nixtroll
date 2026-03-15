@@ -10,6 +10,9 @@
   inputs.disko.url = "github:nix-community/disko";
   inputs.disko.inputs.nixpkgs.follows = "/nixpkgs";
 
+  inputs.trollsystem.url = "tarball+https://codeberg.org/entropia/Trollsystem/archive/main.tar.gz";
+  inputs.trollsystem.inputs.nixpkgs.follows = "/nixpkgs";
+
   outputs = { self, nixpkgs, colmena, flake-utils, sops-nix, disko, ...
     }@inputs:
     let

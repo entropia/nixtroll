@@ -28,7 +28,7 @@ let
   };
 
 in rec {
-  __schema = "v0.20241006";
+  __schema = "v0.5";
 
   nodes = mapAttrs (_: v: v.nixosConfiguration) filteredHosts;
   toplevel = mapAttrs (_: v: v.config.system.build.toplevel) nodes;
