@@ -5,7 +5,7 @@ INSERT INTO users_export
     users.id id,
     IF(users_settings.email_goodie, users.name, SHA2(LOWER(users.name), 256)) name,
     IF(users_settings.email_goodie, users.email, "") email,
-    users_state.force_active force_active,
+    (CASE WHEN users_state.force_active_by IS NOT NULL THEN true ELSE false END) force_active,
     0.0 hours
   FROM users
   JOIN users_settings ON users_settings.user_id = users.id
@@ -48,6 +48,24 @@ SET
   users_export.hours = shift_hours.shift_duration
 WHERE
   users_export.id = shift_hours.user_id
+;
+
+UPDATE
+  users_export,
+  (
+    SELECT
+      worklogs.user_id user_id,
+      COALESCE(SUM(
+          worklogs.hours
+          * (CASE WHEN worklogs.night_shift THEN 2 ELSE 1 END)
+      ), 0) worklog_duration
+    FROM worklogs
+    GROUP BY worklogs.user_id
+  ) AS worklog_hours
+SET
+  users_export.hours = users_export.hours + worklog_hours.worklog_duration
+WHERE
+  users_export.id = worklog_hours.user_id
 ;
 
 DELETE FROM users_export WHERE hours = 0 AND force_active = 0;
